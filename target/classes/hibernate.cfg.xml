@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/TaskManager</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">mani@123</property>
+		
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">1</property>
+		
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
+		
+		
+		<!-- <property name="hibernate.hbm2ddl.auto">create</property> -->
+		<!-- Mapping files -->
+		
+		<property name="hbm2ddl.auto">validate</property>
+		<mapping class="com.infy.entity.UserEntity" />
+		<mapping class="com.infy.entity.TaskEntity" />
+
+		<mapping class="com.infy.entity.RoleEntity" />
+	
+	</session-factory>
+
+</hibernate-configuration>
+	               
