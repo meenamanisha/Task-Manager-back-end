@@ -14,7 +14,7 @@ public class User {
 	private String usrPhno;
 	private String password;
 	private Integer usrMId;
-	private Role roleId;
+	private Role role;
 		
 	private List<Task> tasks;
 
@@ -82,12 +82,13 @@ public class User {
 		this.usrMId = usrMId;
 	}
 
-	public Role getRoleId() {
-		return roleId;
+	
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleId(Role roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public List<Task> getTasks() {

@@ -35,7 +35,7 @@ public class UserEntity {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="roleId")	
-	private RoleEntity roleId;
+	private RoleEntity role;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<TaskEntity> task;
@@ -138,14 +138,15 @@ public class UserEntity {
 
 
 
-	public RoleEntity getRoleId() {
-		return roleId;
+
+	public RoleEntity getRole() {
+		return role;
 	}
 
 
 
-	public void setRoleId(RoleEntity roleId) {
-		this.roleId = roleId;
+	public void setRole(RoleEntity role) {
+		this.role = role;
 	}
 
 
