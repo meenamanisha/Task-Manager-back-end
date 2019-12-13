@@ -5,45 +5,6 @@
 
 <title>Customer Details</title>
 <!-- CSS -->
-
-<script>
-	function fetch() {
-		//1.creating the XMLHTTPRequest
-		var xmlhttp;
-		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp = new XMLHttpRequest();
-		} else {// code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		var custId = document.getElementById("custId").value;
-
-		//2.Configuring onreadystatechange event handler to handle server response
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				//3.Retrieving the json response from the server
-
-				var json = JSON.parse(xmlhttp.responseText);
-				//Set the response values into element having ID as below
-				document.getElementById("custname").value = json.custName;
-				document.getElementById("custaddr").value = json.custPermanentAdd;
-				document.getElementById("custphno").value = json.custPhno;
-
-			} else
-				document.getElementById("msg").innerHTML = "sorry!! "
-						+ xmlhttp.statusText + ":" + xmlhttp.status;
-
-		};
-		//4.Sending a request to Server
-
-		xmlhttp.open("GET",
-				"http://localhost:8080/REST_API/api/customers/"
-						+ custId, true);
-
-		xmlhttp.setRequestHeader('Accept', 'application/json');
-		xmlhttp.send();
-	}
-</script>
-
 </head>
 <body >
 	<h1 align="center"> Hello There !!!!!!</h1>

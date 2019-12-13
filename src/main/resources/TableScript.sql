@@ -56,4 +56,5 @@ insert into role values (1,'ADMIN');
 insert into role values (2,'MANAGER');
 insert into role values (3,'EMPLOYEE');
 
-insert into user1 values (1,'manisha meena','manisha@gmail.com','1234567890','123',1054152,1,'Banglore','Rajasthsn');
+insert into user1 values (1045143,'manisha meena','manisha@gmail.com','1234567890','123',1054152,1,'Banglore','Rajasthsn');
+

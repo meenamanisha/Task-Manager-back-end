@@ -1,10 +1,13 @@
 package com.infy.dao;
+ 
 
-
+import org.hibernate.HibernateException;
+import org.hibernate.Query; 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.infy.entity.UserEntity;
+import com.infy.exception.TaskManagerException;
 import com.infy.entity.HibernateUtility;
 import com.infy.entity.RoleEntity;
 import com.infy.model.User;
@@ -16,7 +19,7 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public User getEmployeeById(int empId) throws Exception {
+	public User getEmployeeById(int empId) throws TaskManagerException,Exception  {
 		try {
 			factory = HibernateUtility.getSessionFactory();
 
@@ -53,7 +56,7 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public Integer registerUser(User user) throws Exception {
+	public Integer registerUser(User user) throws TaskManagerException,Exception  {
 
 		try {
 			factory = HibernateUtility.getSessionFactory();
@@ -62,11 +65,20 @@ public class UserDaoImpl implements UserDao {
 			{
 				session = factory.openSession();	
 				session.getTransaction().begin();
+				String hql = "FROM UserEntity WHERE usrEmail = :email";
+				Query q = session.createQuery(hql);							
+				q.setParameter("email", user.getUsrEmail());				
+				UserEntity usrE= (UserEntity) q.uniqueResult();
+				
+				if(usrE!=null)
+					throw new TaskManagerException("User.Dao.EMAIL_ALREADY_EXIST");
+				
+				
 				UserEntity usr = new UserEntity();
 				usr.setUsrName(user.getUsrName());
 				usr.setPassword(user.getPassword());
 				RoleEntity e = (RoleEntity)session.get(RoleEntity.class, user.getRole().getrId());
-				
+
 				usr.setRole(e);
 				usr.setUsrCurrentAdd(user.getUsrCurrentAdd());
 				usr.setUsrPermanentAdd(user.getUsrPermanentAdd());
@@ -77,7 +89,12 @@ public class UserDaoImpl implements UserDao {
 				return id;
 			}
 
-		} catch (Exception e) {
+		}
+		catch (HibernateException e) {
+			throw e;
+
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally {
@@ -88,6 +105,41 @@ public class UserDaoImpl implements UserDao {
 
 		return null;
 
+	}
+
+
+	@Override
+	public Integer loginUser(User user) throws TaskManagerException,Exception {
+		try {
+			factory = HibernateUtility.getSessionFactory();
+
+			if(factory!=null)
+			{
+				session = factory.openSession();				
+				String hql = "FROM UserEntity WHERE usrEmail = :email";
+				Query q = session.createQuery(hql);							
+				q.setParameter("email", user.getUsrEmail());				
+				UserEntity usrE= (UserEntity) q.uniqueResult();
+				if(usrE==null)
+					throw new TaskManagerException("User.Dao.USER_NOT_FOUND");				
+				if(!usrE.getPassword().equals(user.getPassword()))
+					throw new TaskManagerException("User.Dao.PASSWORD_EMAIL_MIS_MATCH");				
+				return usrE.getUsrId();				
+			}
+			
+
+		}
+		catch (HibernateException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		finally {
+			if(session!=null)
+				session.close();
+		}
+		return null;
 	}
 
 }
