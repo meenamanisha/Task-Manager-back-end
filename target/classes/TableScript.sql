@@ -22,6 +22,7 @@ create table user1(
 	roleId INT NOT NULL,
 	usrCurrentAdd VARCHAR(255),
 	usrPermanentAdd VARCHAR(255),
+	usrProfileImage VARCHAR(255),
 	PRIMARY KEY (usrId),
 	constraint che_man check( usrId <> usrMId),
 	FOREIGN KEY(roleId) REFERENCES role(rId)
@@ -56,5 +57,21 @@ insert into role values (1,'ADMIN');
 insert into role values (2,'MANAGER');
 insert into role values (3,'EMPLOYEE');
 
-insert into user1 values (1045143,'manisha meena','manisha@gmail.com','1234567890','123',1054152,1,'Banglore','Rajasthsn');
+insert into user1 values (1045143,'Zoey Allen','allen.zoey@gmail.com','3456789023','12wertyu45678',null,3,'Banglore','Rajasthan',null);
+insert into user1 values (1045145,'Girish meena','Girish.meena@gmail.com','1029384756','12wertyu',null,2,'Banglore','UP',null);
+insert into user1 values (1045146,'Raja','S.Raja@gmail.com','1029384756','12wertyu',null,2,'Hyderabad','MP',null);
+insert into user1 values (1045147,'Kisuke Urahara','UraharaKisuke@gmail.com','1029384756','12wertyu',null,2,'Kochi','Electronic city, Bangalore',null);
+insert into user1 values (1045148,'Naruto Uzumaki','UzumakiN@gmail.com','1029384756','12wertyu',null,2,'Banglore','Noida, Delhi',null);
+insert into user1 values (1045149,'Rukia Kuchiki','KRukia@gmail.com','1029384756','12wertyu',null,2,'Chennai','Kerala',null);
+insert into user1 values (1045150,'Ichigo Kurusaki','IchigoSoulHunter@gmail.com','1029384756','12wertyu',null,2,'Pune','69th anand vihar road, Rajasthan',null);
+insert into user1 values (1045151,'Ken Kaneki','EyePatch@gmail.com','1029384756','12wertyu',null,2,'7 hills, Hyderabad','Rajasthan',null);
+insert into user1 values (1045152,'Juuzou Suzuya','SuzuyaJuzu@gmail.com','1029384756','12wertyu',null,2,'Banglore','15th cross hari priya, Kochi',null);
+insert into user1 values (1045153,'Light Yagami','KiraYagami@gmail.com','1029384756','12wertyu',null,3,'Manglore','b-block, gargi, Jaipur',null);
+insert into user1 values (1045154,'Toka ','Touka.Kirishima@gmail.com','1029384756','12wertyu',null,3,'Banglore','Maharastra',null);
+insert into user1 values (1045155,'Ken Karnitez','Kkarnitez@gmail.com','1029384756','12wertyu',null,3,'Banglore','Mysore',null);
+insert into user1 values (1045156,'Gitika Kumari','KumariGitika@gmail.com','1029384756','12wertyu',null,3,'Banglore','Gurgaon',null);
+insert into user1 values (1045157,'Joey','Crazy.joey.335@gmail.com','1029384756','12wertyu',null,3,'Pune','Rajasthan',null);
+insert into user1 values (1045158,'Ankit Bhardwaj','Sunshine.0987@gmail.com','1029384756','12wertyu',null,3,'Chennai','Rajasthan',null);
+insert into user1 values (1045159,'Deepak Yadav','Y1234.Deepak@gmail.com','1029384756','12wertyu',null,3,'Nepal','Jammu & Kashmir',null);
+
 

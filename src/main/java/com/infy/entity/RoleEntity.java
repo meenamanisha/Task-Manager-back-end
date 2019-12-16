@@ -5,7 +5,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
- 
+
+import com.infy.model.Role;
 import com.infy.model.RoleMapping;
 
 @Entity
@@ -32,6 +33,12 @@ public class RoleEntity {
 	public void setrName(RoleMapping rName) {
 		this.rName = rName;		
 	}
-	
+	public Role roleEntityToModel()
+	{
+		Role r = new Role();
+		r.setrId(this.rId);
+		r.setrName(this.rName);	
+		return r;
+	}
 
 }

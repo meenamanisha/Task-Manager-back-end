@@ -31,8 +31,21 @@ public class UserEntity {
 	private String usrPhno;
 	private String password;
 	private Integer usrMId;
+	private String usrProfileImage;
 	 
 	
+	public String getUsrProfileImage() {
+		return usrProfileImage;
+	}
+
+
+
+	public void setUsrProfileImage(String usrProfileImage) {
+		this.usrProfileImage = usrProfileImage;
+	}
+
+
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="roleId")	
 	private RoleEntity role;
@@ -174,6 +187,7 @@ public class UserEntity {
 		e.setUsrPermanentAdd(this.usrPermanentAdd);
 		e.setUsrPhno(this.usrPhno);	
 		e.setPassword(null);
+		e.setUsrProfileImage(this.usrProfileImage);
 		return e;
 	}
 	

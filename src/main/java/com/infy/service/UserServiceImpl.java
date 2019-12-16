@@ -1,5 +1,7 @@
 package com.infy.service;
 
+import java.util.List;
+
 import com.infy.dao.UserDao;
 import com.infy.dao.UserDaoImpl;
 import com.infy.exception.TaskManagerException;
@@ -25,7 +27,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Integer loginUser(User user) throws TaskManagerException,Exception {
+	public User loginUser(User user) throws TaskManagerException,Exception {
 		if(user==null)
 			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
 		if(!UserServiceValidators.emailValidate(user.getUsrEmail()))
@@ -33,6 +35,11 @@ public class UserServiceImpl implements UserService {
 		
 		
 		return userDao.loginUser(user);		
+	}
+
+	@Override
+	public List<User> getAllUserDetails() throws TaskManagerException, Exception {		
+		return userDao.getAllUserDetails();
 	}
 
 }

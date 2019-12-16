@@ -2,6 +2,7 @@ package com.infy.controller;
 
 
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.ws.rs.Consumes;
@@ -23,6 +24,29 @@ import com.infy.service.UserServiceImpl;
 public class EmployeeController {
 	public static Properties p = PropertiesReader.properties;
 	private static UserService usrServ= new UserServiceImpl();
+	
+	@GET
+	@Path("/Details")
+	@Produces("application/json")
+	public Response getAllUserDetails()
+	{
+		try {
+
+			List<User> userList= usrServ.getAllUserDetails();
+
+					
+			return Response.ok().entity(userList).build();
+		}
+		catch (TaskManagerException e) {
+			System.out.println(e.getMessage());
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(400).entity(s).build();			
+		}
+		catch (Exception e) {
+			return Response.status(404).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
 
 	@POST
 	@Path("/registration")
@@ -34,10 +58,11 @@ public class EmployeeController {
 
 			int usrId = usrServ.registerUser(usr);
 
-			String ans = "{\n\"usrId\" :"+usrId+",\n \"message\":"+p.getProperty("User.Controller.REGISTRATION_SUCCESSFUL")+"\n}";			
+			String ans = "{\n\"usrId\" :"+usrId+",\n \"message\":\""+p.getProperty("User.Controller.REGISTRATION_SUCCESSFUL")+"\"\n}";			
 			return Response.ok().entity(ans).build();
 		}
 		catch (TaskManagerException e) {
+			System.out.println(e.getMessage());
 			String s = p.getProperty(e.getMessage().toString());
 			return Response.status(400).entity(s).build();			
 		}
@@ -53,12 +78,8 @@ public class EmployeeController {
 	public Response login( User usr)
 	{
 		try {
-			int id = usrServ.loginUser(usr);
-
-			String s = p.getProperty("User.Controller.LOGIN_SUCCESSFUL") + id;
-			return Response.ok().entity(s).build();
-
-
+			User loggedInUser = usrServ.loginUser(usr);										
+			return Response.ok().entity(loggedInUser).build();
 		}
 		catch (TaskManagerException e) {
 			String s = p.getProperty(e.getMessage().toString());

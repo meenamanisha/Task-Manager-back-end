@@ -15,7 +15,17 @@ public class User {
 	private String password;
 	private Integer usrMId;
 	private Role role;
+	private String usrProfileImage;
+	
 		
+	public String getUsrProfileImage() {
+		return usrProfileImage;
+	}
+
+	public void setUsrProfileImage(String usrProfileImage) {
+		this.usrProfileImage = usrProfileImage;
+	}
+
 	private List<Task> tasks;
 
 	public int getUsrId() {
