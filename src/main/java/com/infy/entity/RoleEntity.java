@@ -13,16 +13,16 @@ import com.infy.model.RoleMapping;
 @Table(name="role")
 public class RoleEntity {
 	@Id
-	private int rId;
+	private Integer rId;
 	
 	@Enumerated(EnumType.STRING)
 	private RoleMapping rName;
 
-	public int getrId() {
+	public Integer getrId() {
 		return rId;
 	}
 
-	public void setrId(int rId) {
+	public void setrId(Integer rId) {
 		this.rId = rId;
 	}
 

@@ -24,15 +24,25 @@ public class TaskEntity {
 	@Id
 	@GenericGenerator(name = "gen", strategy = "increment")
 	@GeneratedValue(generator = "gen")
-	private int tId;
+	private Integer tId;
+	private String tDesc;
 	
-	private String tOwner;
+	public String gettDesc() {
+		return tDesc;
+	}
+
+	public void settDesc(String tDesc) {
+		this.tDesc = tDesc;
+	}
+
+	private Integer tOwner;
+	
 	
 	private String tName;
 	
-	private int tExpEff;
+	private Integer tExpEff;
 	
-	private int tActEff;
+	private Integer tActEff;
 	
 	@Column(columnDefinition="timestamp")
 	private LocalDateTime tAllDate;
@@ -44,24 +54,25 @@ public class TaskEntity {
 	@Enumerated(EnumType.STRING)
 	private TaskStatus tStatus;
 
-	public int gettId() {
+	public Integer gettId() {
 		return tId;
 	}
 
-	public void settId(int tId) {
+	public void settId(Integer tId) {
 		this.tId = tId;
 	}
 
 	
 
-	public String gettOwner() {
+
+
+	public Integer gettOwner() {
 		return tOwner;
 	}
 
-	public void settOwner(String tOwner) {
+	public void settOwner(Integer tOwner) {
 		this.tOwner = tOwner;
 	}
-
 
 	public String gettName() {
 		return tName;
@@ -72,11 +83,11 @@ public class TaskEntity {
 	}
 
 
-	public void settExpEff(int tExpEff) {
+	public void settExpEff(Integer tExpEff) {
 		this.tExpEff = tExpEff;
 	}
 
-	public void settActEff(int tActEff) {
+	public void settActEff(Integer tActEff) {
 		this.tActEff = tActEff;
 	}
 
@@ -98,11 +109,11 @@ public class TaskEntity {
 		this.tCompDate = tCompDate;
 	}
 
-	public int gettExpEff() {
+	public Integer gettExpEff() {
 		return tExpEff;
 	}
 
-	public int gettActEff() {
+	public Integer gettActEff() {
 		return tActEff;
 	}
 
@@ -125,6 +136,7 @@ public class TaskEntity {
 		t.settName(this.tName);
 		t.settOwner(this.tOwner);
 		t.settStatus(this.tStatus);
+		t.settDesc(this.tDesc);
 		return t;
 	}
 }

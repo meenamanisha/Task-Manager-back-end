@@ -6,7 +6,7 @@ import com.infy.dao.UserDao;
 import com.infy.dao.UserDaoImpl;
 import com.infy.exception.TaskManagerException;
 import com.infy.model.User;
-import com.infy.validators.UserServiceValidators;
+import com.infy.validators.UserValidators;
 
 public class UserServiceImpl implements UserService {
 
@@ -21,25 +21,54 @@ public class UserServiceImpl implements UserService {
 	public Integer registerUser(User user) throws TaskManagerException,Exception {
 		if(user==null)
 			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
-		UserServiceValidators.userValidate(user);
+		UserValidators.userValidate(user);
 		
-		return userDao.registerUser(user);
+		Integer id = userDao.registerUser(user);
+		if(id==null)
+			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");
+		return id;
 	}
 
 	@Override
 	public User loginUser(User user) throws TaskManagerException,Exception {
 		if(user==null)
 			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
-		if(!UserServiceValidators.emailValidate(user.getUsrEmail()))
+		if(!UserValidators.emailValidate(user.getUsrEmail()))
 			throw new TaskManagerException("User.Service.IN_VALID_EMAIL_ID");
 		
 		
-		return userDao.loginUser(user);		
+		User us = userDao.loginUser(user);	
+		if(us==null)
+			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");
+		return us;
 	}
 
 	@Override
-	public List<User> getAllUserDetails() throws TaskManagerException, Exception {		
-		return userDao.getAllUserDetails();
+	public List<User> getAllUserDetails() throws TaskManagerException, Exception {
+		List<User> usrList = userDao.getAllUserDetails(); 
+		if(usrList==null)
+			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");		
+		return usrList;
+	}
+
+	@Override
+	public List<User> getManagers() throws TaskManagerException, Exception {		
+		List<User> managersList = userDao.getManagers();
+		
+		if(managersList==null)
+			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");		
+		return managersList;
+	}
+
+	@Override
+	public List<Integer> updateMangers(List<User> usrList) throws TaskManagerException, Exception {
+		if(usrList==null)
+			throw new TaskManagerException("User.Service.NO_DATA_FOUND");
+		List<Integer> idsList = userDao.updateMangers(usrList);
+
+		if(idsList==null)
+			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");		
+		return idsList;
 	}
 
 }

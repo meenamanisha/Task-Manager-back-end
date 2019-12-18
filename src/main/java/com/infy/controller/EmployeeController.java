@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -32,7 +33,53 @@ public class EmployeeController {
 	{
 		try {
 
-			List<User> userList= usrServ.getAllUserDetails();
+			List<User> userList= usrServ.getAllUserDetails();					
+			return Response.ok().entity(userList).build();
+		}
+		catch (TaskManagerException e) {
+			System.out.println(e.getMessage());
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+	
+	
+	
+	@PUT
+	@Path("/updated")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response updatedManagers(List<User> usrList)
+	{
+		try {
+
+			List<Integer> userList= usrServ.updateMangers(usrList);					
+			return Response.ok().entity(userList).build();
+		}
+		catch (TaskManagerException e) { 
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+	
+	
+	@GET
+	@Path("/Managers")
+	@Produces("application/json")
+	public Response getManagers( )
+	{
+		try {
+
+			List<User> userList= usrServ.getManagers();
 
 					
 			return Response.ok().entity(userList).build();
@@ -40,13 +87,15 @@ public class EmployeeController {
 		catch (TaskManagerException e) {
 			System.out.println(e.getMessage());
 			String s = p.getProperty(e.getMessage().toString());
-			return Response.status(400).entity(s).build();			
+			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {
-			return Response.status(404).entity( e.getMessage().toString() ).build();
+			
+			return Response.status(500).entity( e.getMessage().toString() ).build();
 		}	
 		
 	}
+	
 
 	@POST
 	@Path("/registration")
@@ -64,10 +113,10 @@ public class EmployeeController {
 		catch (TaskManagerException e) {
 			System.out.println(e.getMessage());
 			String s = p.getProperty(e.getMessage().toString());
-			return Response.status(400).entity(s).build();			
+			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {
-			return Response.status(404).entity( e.getMessage().toString() ).build();
+			return Response.status(500).entity( e.getMessage().toString() ).build();
 		}	
 	}
 
@@ -83,10 +132,10 @@ public class EmployeeController {
 		}
 		catch (TaskManagerException e) {
 			String s = p.getProperty(e.getMessage().toString());
-			return Response.status(400).entity(s).build();			
+			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {
-			return Response.status(404).entity( e.getMessage().toString() ).build();
+			return Response.status(500).entity( e.getMessage().toString() ).build();
 
 		}
 	}
@@ -105,7 +154,7 @@ public class EmployeeController {
 		}
 
 		catch (Exception e) {
-			return Response.status(404).entity( e.getMessage().toString() ).build();
+			return Response.status(500).entity( e.getMessage().toString() ).build();
 		}
 
 

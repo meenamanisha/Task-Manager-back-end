@@ -10,5 +10,7 @@ public interface UserService {
 	public Integer registerUser(User user) throws TaskManagerException,Exception;
 	public User loginUser(User user) throws TaskManagerException,Exception;
 	public List<User> getAllUserDetails() throws TaskManagerException,Exception;
+	public List<User> getManagers() throws TaskManagerException,Exception;
+	public List<Integer> updateMangers(List<User> usrList) throws TaskManagerException,Exception;
 
 }

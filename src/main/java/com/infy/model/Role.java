@@ -1,12 +1,12 @@
 package com.infy.model;
 
 public class Role {
-	private int rId;
+	private Integer rId;
 	private RoleMapping rName;
-	public int getrId() {
+	public Integer getrId() {
 		return rId;
 	}
-	public void setrId(int rId) {
+	public void setrId(Integer rId) {
 		this.rId = rId;
 	}
 	public RoleMapping getrName() {

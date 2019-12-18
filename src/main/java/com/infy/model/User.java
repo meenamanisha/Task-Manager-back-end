@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public class User {
-	private int usrId;	
+	private Integer usrId;	
 	private String usrCurrentAdd;
 	private String usrEmail;
 	private String usrName;
@@ -16,8 +16,27 @@ public class User {
 	private Integer usrMId;
 	private Role role;
 	private String usrProfileImage;
+
+	private String usrMName;
+	private String usrMEmail;
 	
 		
+	public String getUsrMName() {
+		return usrMName;
+	}
+
+	public void setUsrMName(String usrMName) {
+		this.usrMName = usrMName;
+	}
+
+	public String getUsrMEmail() {
+		return usrMEmail;
+	}
+
+	public void setUsrMEmail(String usrMEmail) {
+		this.usrMEmail = usrMEmail;
+	}
+
 	public String getUsrProfileImage() {
 		return usrProfileImage;
 	}
@@ -28,11 +47,11 @@ public class User {
 
 	private List<Task> tasks;
 
-	public int getUsrId() {
+	public Integer getUsrId() {
 		return usrId;
 	}
 
-	public void setUsrId(int usrId) {
+	public void setUsrId(Integer usrId) {
 		this.usrId = usrId;
 	}
 

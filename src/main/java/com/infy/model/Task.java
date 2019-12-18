@@ -3,22 +3,30 @@ package com.infy.model;
 import java.time.LocalDateTime;
 
 public class Task {
-	private int tId;
+	private Integer tId;
 
 	private String tName;
 
-	private String tOwner;
+	private Integer tOwner;
 
-	private int tExpEff;
+	private Integer tExpEff;
+	private String tDesc;
+	
 
-	private int tActEff;	
+	public String gettDesc() {
+		return tDesc;
+	}
+	public void settDesc(String tDesc) {
+		this.tDesc = tDesc;
+	}
+	private Integer tActEff;	
 	private LocalDateTime tAllDate;
 	private LocalDateTime tCompDate;	
 	private TaskStatus tStatus;
-	public int gettId() {
+	public Integer gettId() {
 		return tId;
 	}
-	public void settId(int tId) {
+	public void settId(Integer tId) {
 		this.tId = tId;
 	}
 	public String gettName() {
@@ -29,29 +37,30 @@ public class Task {
 	}
 
 	
-	public int gettExpEff() {
+	public Integer gettExpEff() {
 		return tExpEff;
 	}
-	public void settExpEff(int tExpEff) {
+	public void settExpEff(Integer tExpEff) {
 		this.tExpEff = tExpEff;
 	}
-	public int gettActEff() {
+	public Integer gettActEff() {
 		return tActEff;
 	}
-	public void settActEff(int tActEff) {
+	public void settActEff(Integer tActEff) {
 		this.tActEff = tActEff;
 	}
 	
 	public LocalDateTime gettAllDate() {
 		return tAllDate;
 	}
-	public String gettOwner() {
+	
+	
+	public Integer gettOwner() {
 		return tOwner;
 	}
-	public void settOwner(String tOwner) {
+	public void settOwner(Integer tOwner) {
 		this.tOwner = tOwner;
 	}
-	
 	public LocalDateTime gettCompDate() {
 		return tCompDate;
 	}

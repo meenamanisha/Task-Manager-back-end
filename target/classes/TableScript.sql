@@ -25,7 +25,8 @@ create table user1(
 	usrProfileImage VARCHAR(255),
 	PRIMARY KEY (usrId),
 	constraint che_man check( usrId <> usrMId),
-	FOREIGN KEY(roleId) REFERENCES role(rId)
+	FOREIGN KEY(roleId) REFERENCES role(rId),
+	FOREIGN KEY(usrMID) REFERENCES user1(usrId)
 );
 
 
@@ -34,14 +35,16 @@ create table task
 (
 	tId INT NOT NULL,
 	tName VARCHAR(255) NOT NULL,
-	tOwner VARCHAR(255) NOT NULL,
+	tOwner INT NOT NULL,
 	tStatus VARCHAR(20) NOT NULL,
 	tExpEff INT NOT NULL,
 	tActEff INT,
 	tAllDate TIMESTAMP,
 	tCompDate TIMESTAMP,
+	tDesc TINYTEXT,
 	PRIMARY KEY(tId),
-	constraint task_status_check check( tStatus IN('Completed','New','In Progress','On Hold','Cancelled'))		
+	FOREIGN KEY(tOwner) REFERENCES user1(usrId),
+	constraint task_status_check check( tStatus IN('COMPLETED','ON_HOLD','IN_PROCESS','CANCELLED','NEW','PENDING_TO_VERFIFY'))		
 );
 
 
@@ -73,5 +76,5 @@ insert into user1 values (1045156,'Gitika Kumari','KumariGitika@gmail.com','1029
 insert into user1 values (1045157,'Joey','Crazy.joey.335@gmail.com','1029384756','12wertyu',null,3,'Pune','Rajasthan',null);
 insert into user1 values (1045158,'Ankit Bhardwaj','Sunshine.0987@gmail.com','1029384756','12wertyu',null,3,'Chennai','Rajasthan',null);
 insert into user1 values (1045159,'Deepak Yadav','Y1234.Deepak@gmail.com','1029384756','12wertyu',null,3,'Nepal','Jammu & Kashmir',null);
-
+insert into user1 values (1045144,'Manisha Meena','meenamanisha337@gmail.com','3456789023','12345678',null,1,'Bangalore','Rajasthan',null);
 

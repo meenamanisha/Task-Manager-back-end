@@ -3,15 +3,15 @@ package com.infy.validators;
 import com.infy.exception.TaskManagerException;
 import com.infy.model.User;
 
-public class UserServiceValidators {
+public class UserValidators {
 	public static void userValidate(User usr) throws TaskManagerException
 	{
 		if(!emailValidate(usr.getUsrEmail()))
-			throw new TaskManagerException("User.Service.IN_VALID_EMAIL_ID");
+			throw new TaskManagerException("User.Validator.IN_VALID_EMAIL_ID");
 		if(!phoneValidate(usr.getUsrPhno()))
-			throw new TaskManagerException("User.Service.IN_VALID_PHONE_NO");
+			throw new TaskManagerException("User.Validator.IN_VALID_PHONE_NO");
 		if(!nameValidate(usr.getUsrName()))
-			throw new TaskManagerException("User.Service.IN_VALID_NAME");
+			throw new TaskManagerException("User.Validator.IN_VALID_NAME");
 		
 	}
 	public static boolean emailValidate(String email)
