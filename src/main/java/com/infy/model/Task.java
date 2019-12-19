@@ -1,6 +1,6 @@
 package com.infy.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime; 
 
 public class Task {
 	private Integer tId;
@@ -50,9 +50,7 @@ public class Task {
 		this.tActEff = tActEff;
 	}
 	
-	public LocalDateTime gettAllDate() {
-		return tAllDate;
-	}
+	
 	
 	
 	public Integer gettOwner() {
@@ -61,14 +59,19 @@ public class Task {
 	public void settOwner(Integer tOwner) {
 		this.tOwner = tOwner;
 	}
+	
+	
+	public LocalDateTime gettAllDate() {
+		return tAllDate;
+	}
+	public void settAllDate(LocalDateTime tAllDate) {
+		this.tAllDate = tAllDate;
+	}
 	public LocalDateTime gettCompDate() {
 		return tCompDate;
 	}
 	public void settCompDate(LocalDateTime tCompDate) {
 		this.tCompDate = tCompDate;
-	}
-	public void settAllDate(LocalDateTime tAllDate) {
-		this.tAllDate = tAllDate;
 	}
 	public TaskStatus gettStatus() {
 		return tStatus;

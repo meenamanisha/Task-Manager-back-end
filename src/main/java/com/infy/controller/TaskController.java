@@ -6,6 +6,7 @@ import java.util.Properties;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.Response;
 import com.infy.config.PropertiesReader;
 import com.infy.exception.TaskManagerException;
 import com.infy.model.Task;
+import com.infy.model.User;
 import com.infy.service.TaskService;
 import com.infy.service.TaskServiceImpl; 
 
@@ -61,6 +63,30 @@ public class TaskController {
 		}	
 		
 	}
+	
+	@PUT
+	@Path("/TaskToUser")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response assignTaskToUser(User us)
+	{
+		try {
+			List<Integer> taskList = taskServ.assignTaskToUser(us);			
+			return Response.ok().entity(taskList).build();
+		}
+		catch (TaskManagerException e) { 
+			System.out.println(e.getMessage());
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+	
 
 
 }

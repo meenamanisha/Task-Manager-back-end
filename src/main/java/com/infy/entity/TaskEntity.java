@@ -1,9 +1,7 @@
 package com.infy.entity;
 
-
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
+ 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -43,12 +41,14 @@ public class TaskEntity {
 	private Integer tExpEff;
 	
 	private Integer tActEff;
-	
-	@Column(columnDefinition="timestamp")
+		
+//	@Temporal(TemporalType.TIMESTAMP)
+//	@Column(columnDefinition="timestamp")
 	private LocalDateTime tAllDate;
-	@Column(columnDefinition="timestamp")
+
+//	@Temporal(TemporalType.TIMESTAMP)
+//	@Column(columnDefinition="timestamp")
 	private LocalDateTime tCompDate;
-	
 	
 	
 	@Enumerated(EnumType.STRING)
@@ -93,6 +93,10 @@ public class TaskEntity {
 
 	
 
+	
+
+	
+
 	public LocalDateTime gettAllDate() {
 		return tAllDate;
 	}
@@ -117,6 +121,8 @@ public class TaskEntity {
 		return tActEff;
 	}
 
+	
+	
 	public TaskStatus gettStatus() {
 		return tStatus;
 	}
@@ -124,7 +130,7 @@ public class TaskEntity {
 	public void settStatus(TaskStatus tStatus) {
 		this.tStatus = tStatus;
 	}
-	
+
 	public Task taskEnityToModel()
 	{
 		Task t = new Task();

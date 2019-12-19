@@ -6,6 +6,7 @@ import com.infy.dao.TaskDao;
 import com.infy.dao.TaskDaoImpl;
 import com.infy.exception.TaskManagerException;
 import com.infy.model.Task;
+import com.infy.model.User;
 import com.infy.validators.TaskValidators;
 
 public class TaskServiceImpl implements TaskService {
@@ -29,6 +30,15 @@ public class TaskServiceImpl implements TaskService {
 		if(taskList==null)
 			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
 		return taskList; 
+	}
+	@Override
+	public List<Integer> assignTaskToUser(User us) throws TaskManagerException, Exception {
+		if(us==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		List<Integer> ans = taskDao.assignTaskToUser(us);
+		if(ans==null)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;
 	}
 
 }
