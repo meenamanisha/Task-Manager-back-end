@@ -3,14 +3,14 @@ package com.infy.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query; 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
-import com.infy.entity.UserEntity;
+import com.infy.entity.User1;
 import com.infy.exception.TaskManagerException;
 import com.infy.entity.HibernateUtility;
 import com.infy.entity.RoleEntity;
@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
 			if(factory!=null)
 			{
 				session = factory.openSession();
-				UserEntity usrEn = (UserEntity)session.get(UserEntity.class, empId);
+				User1 usrEn = session.get(User1.class, empId);
 				User usr = usrEn.userEntityToModel();				
 				return usr;
 			}
@@ -67,22 +67,24 @@ public class UserDaoImpl implements UserDao {
 			{
 				session = factory.openSession();	
 				session.getTransaction().begin();
-				String hql = "FROM UserEntity WHERE usrEmail = :email";
-				Query q = session.createQuery(hql);							
+				String hql = "FROM User1 WHERE usrEmail = :email";
+				
+				@SuppressWarnings("unchecked")
+				Query<User1> q = session.createQuery(hql);				
 				q.setParameter("email", user.getUsrEmail());				
-				UserEntity usrE= (UserEntity) q.uniqueResult();
+				User1 usrE= q.uniqueResult();
 
 				if(usrE!=null)
 					throw new TaskManagerException("User.Dao.EMAIL_ALREADY_EXIST");
-				UserEntity urE = (UserEntity) session.get(UserEntity.class, user.getUsrMId());
+				User1 urE = session.get(User1.class, user.getUsrMId());
 				if(urE!=null && urE.getRole().getrId()!=2)
 					throw new TaskManagerException("User.Dao.MANAGER_NOT_EXIST");
 
-				UserEntity usr = new UserEntity();
+				User1 usr = new User1();
 				usr.setUsrName(user.getUsrName());
 				usr.setPassword(user.getPassword());
 				usr.setUsrProfileImage(user.getUsrProfileImage());
-				RoleEntity e = (RoleEntity)session.get(RoleEntity.class, user.getRole().getrId());
+				RoleEntity e = session.get(RoleEntity.class, user.getRole().getrId());
 
 				usr.setRole(e);
 				usr.setUsrCurrentAdd(user.getUsrCurrentAdd());
@@ -124,10 +126,12 @@ public class UserDaoImpl implements UserDao {
 			if(factory!=null)
 			{
 				session = factory.openSession();				
-				String hql = "FROM UserEntity WHERE usrEmail = :email";
-				Query q = session.createQuery(hql);							
+				String hql = "FROM User1 WHERE usrEmail = :email";
+				
+				@SuppressWarnings("unchecked")
+				Query<User1> q = session.createQuery(hql);							
 				q.setParameter("email", user.getUsrEmail());				
-				UserEntity usrE= (UserEntity) q.uniqueResult();
+				User1 usrE= q.uniqueResult();
 				if(usrE==null)
 					throw new TaskManagerException("User.Dao.USER_NOT_FOUND");
 				
@@ -138,7 +142,7 @@ public class UserDaoImpl implements UserDao {
 				User us= usrE.userEntityToModel();
 				if(usrE.getUsrMId()!=null)
 				{
-					UserEntity uE =(UserEntity) session.get(UserEntity.class, usrE.getUsrMId()); 
+					User1 uE =session.get(User1.class, usrE.getUsrMId()); 
 					if(uE==null)
 						throw new TaskManagerException("User.Dao.USER_NOT_FOUND");
 //					if(uE.getRole().getrId()!=2)
@@ -189,15 +193,16 @@ public class UserDaoImpl implements UserDao {
 			{
 				List<User> userList = new ArrayList<User>();
 				session = factory.openSession();				
-				String hql = "FROM UserEntity WHERE roleId=3";
-				Query q = session.createQuery(hql);							
-//				q.setParameter("email", user.getUsrEmail());				
+				String hql = "FROM User1 WHERE roleId=3";
+				
 				@SuppressWarnings("unchecked")
-				List<UserEntity> userEn = q.list(); 
+				Query<User1> q = session.createQuery(hql);							
+//				q.setParameter("email", user.getUsrEmail());								
+				List<User1> userEn = q.list(); 
 				if(userEn==null)
 					throw new TaskManagerException("User.Dao.SYSTEM_EMPTY");
 				
-				for(UserEntity usrE:userEn)
+				for(User1 usrE:userEn)
 				{
 					User usr = usrE.userEntityToModel();
 					Role r = usrE.getRole().roleEntityToModel();
@@ -249,16 +254,16 @@ public class UserDaoImpl implements UserDao {
 			{
 				List<User> userList = new ArrayList<User>();
 				session = factory.openSession();				
-				String hql = "FROM UserEntity WHERE roleId=2";
-				Query q = session.createQuery(hql);							
+				String hql = "FROM User1 WHERE roleId=2";
+				@SuppressWarnings("unchecked")
+				Query<User1> q = session.createQuery(hql);							
 
 				
-				@SuppressWarnings("unchecked")
-				List<UserEntity> userEn = q.list(); 
+				List<User1> userEn = q.list(); 
 				if(userEn==null)
 					throw new TaskManagerException("User.Dao.NO_MANAGER_FOUND");
 				
-				for(UserEntity usrE:userEn)
+				for(User1 usrE:userEn)
 				{
 					User usr = usrE.userEntityToModel();					
 					userList.add(usr);
@@ -298,7 +303,7 @@ public class UserDaoImpl implements UserDao {
 				session.getTransaction().begin();
 				for(User u: usrList)
 				{
-					UserEntity usrEn = (UserEntity)session.get(UserEntity.class, u.getUsrId());
+					User1 usrEn = session.get(User1.class, u.getUsrId());
 					if(usrEn==null)
 						throw new TaskManagerException("User.Dao.USER_NOT_FOUND");
 					usrEn.setUsrMId(u.getUsrMId());

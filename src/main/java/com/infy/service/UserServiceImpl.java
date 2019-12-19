@@ -12,8 +12,7 @@ public class UserServiceImpl implements UserService {
 
 	private UserDao userDao= new UserDaoImpl();
 	@Override
-	public User getEmployeeById(int empId) throws TaskManagerException,Exception {
-		// TODO Auto-generated method stub
+	public User getEmployeeById(int empId) throws TaskManagerException,Exception {	
 		return null;
 	}
 

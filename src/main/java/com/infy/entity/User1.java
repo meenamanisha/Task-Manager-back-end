@@ -18,7 +18,7 @@ import com.infy.model.User;
 
 @Entity
 @Table(name="user1")
-public class UserEntity {
+public class User1 {
 	
 	@Id
 	@GenericGenerator(name = "gen", strategy = "increment")
