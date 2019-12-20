@@ -19,43 +19,11 @@ import com.infy.model.Role;
 import com.infy.model.Task;
 import com.infy.model.User;
 
+@SuppressWarnings("unchecked")
 public class UserDaoImpl implements UserDao {
 
 	SessionFactory factory;
 	Session session;
-
-
-	@Override
-	public User getEmployeeById(int empId) throws TaskManagerException,Exception  {
-		try {
-			factory = HibernateUtility.getSessionFactory();
-
-			if(factory!=null)
-			{
-				session = factory.openSession();
-				User1 usrEn = session.get(User1.class, empId);
-				User usr = usrEn.userEntityToModel();				
-				return usr;
-			}
-
-		}
-		catch (HibernateException e) {
-			throw e;
-
-		}
-//		catch (TaskManagerException e) {
-//			throw e;
-//		}
-		catch (Exception e) {
-			throw e;
-		}
-		finally {
-			if(session!=null)
-				session.close();
-		}
-		return null;
-	}
-
 
 	@Override
 	public Integer registerUser(User user) throws TaskManagerException,Exception  {
@@ -68,8 +36,7 @@ public class UserDaoImpl implements UserDao {
 				session = factory.openSession();	
 				session.getTransaction().begin();
 				String hql = "FROM User1 WHERE usrEmail = :email";
-				
-				@SuppressWarnings("unchecked")
+						
 				Query<User1> q = session.createQuery(hql);				
 				q.setParameter("email", user.getUsrEmail());				
 				User1 usrE= q.uniqueResult();
@@ -98,7 +65,8 @@ public class UserDaoImpl implements UserDao {
 
 		}
 		catch (HibernateException e) {
-			throw e;
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
+			
 
 		}
 		catch (TaskManagerException e) {
@@ -127,8 +95,7 @@ public class UserDaoImpl implements UserDao {
 			{
 				session = factory.openSession();				
 				String hql = "FROM User1 WHERE usrEmail = :email";
-				
-				@SuppressWarnings("unchecked")
+							
 				Query<User1> q = session.createQuery(hql);							
 				q.setParameter("email", user.getUsrEmail());				
 				User1 usrE= q.uniqueResult();
@@ -145,8 +112,6 @@ public class UserDaoImpl implements UserDao {
 					User1 uE =session.get(User1.class, usrE.getUsrMId()); 
 					if(uE==null)
 						throw new TaskManagerException("User.Dao.USER_NOT_FOUND");
-//					if(uE.getRole().getrId()!=2)
-//						throw new TaskManagerException("User.Dao.MANAGER_NOT_EXIST");
 					us.setUsrMName(uE.getUsrName());
 					us.setUsrMEmail(uE.getUsrEmail());
 				}
@@ -168,7 +133,7 @@ public class UserDaoImpl implements UserDao {
 
 		}
 		catch (HibernateException e) {
-			throw e;
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
 		}
 		catch (TaskManagerException e) {
 			throw e;
@@ -185,27 +150,55 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public List<User> getAllUserDetails() throws TaskManagerException, Exception {
+	public List<User> getAllUserDetails(Integer usrId) throws TaskManagerException, Exception {
 		try {
 			factory = HibernateUtility.getSessionFactory();
 
 			if(factory!=null)
 			{
 				List<User> userList = new ArrayList<User>();
-				session = factory.openSession();				
-				String hql = "FROM User1 WHERE roleId=3";
+				session = factory.openSession();		
 				
-				@SuppressWarnings("unchecked")
-				Query<User1> q = session.createQuery(hql);							
-//				q.setParameter("email", user.getUsrEmail());								
+				
+				
+				User1 usrEn = session.get(User1.class, usrId);
+				if(usrEn==null)
+					throw new TaskManagerException("User.Dao.EMAIL_ALREADY_EXIST");
+				if(usrEn.getRole().getrId()>2)
+					throw new TaskManagerException("User.Dao.NO_AUTHORITY");
+				
+				String hql = null;
+				Query<User1> q = null;
+				if(usrEn.getRole().getrId()==1)
+				{
+					
+					hql = "FROM User1 WHERE roleId=3 "; 
+					q = session.createQuery(hql);
+				}
+				else if(usrEn.getRole().getrId()==2)
+				{
+					hql = "FROM User1 WHERE usrMId = :id"; 
+					q = session.createQuery(hql);
+					q.setParameter("id", usrId);				
+				}
+				
 				List<User1> userEn = q.list(); 
-				if(userEn==null)
-					throw new TaskManagerException("User.Dao.SYSTEM_EMPTY");
+				if(userEn==null || userEn.size()==0)
+					throw new TaskManagerException("User.Dao.NO_EMPLOYEE_FIND");
 				
 				for(User1 usrE:userEn)
 				{
 					User usr = usrE.userEntityToModel();
 					Role r = usrE.getRole().roleEntityToModel();
+					if(usr.getUsrId()!=null)
+					{
+						String query = "select usrName from User1 where usrId =:id";
+						 
+						Query<String> q2 = session.createQuery(query);
+						q2.setParameter("id", usr.getUsrMId());
+						usr.setUsrMName(q2.uniqueResult());
+						
+					}
 					usr.setRole(r);
 					List<TaskEntity> taskE = usrE.getTask();
 					
@@ -229,7 +222,7 @@ public class UserDaoImpl implements UserDao {
 
 		}
 		catch (HibernateException e) {
-			throw e;
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
 		}
 		catch (TaskManagerException e) {
 			throw e;
@@ -246,21 +239,27 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public List<User> getManagers() throws TaskManagerException, Exception {
+	public List<User> getManagers(Integer usrId) throws TaskManagerException, Exception {
 		try {
 			factory = HibernateUtility.getSessionFactory();
 
 			if(factory!=null)
 			{
 				List<User> userList = new ArrayList<User>();
-				session = factory.openSession();				
-				String hql = "FROM User1 WHERE roleId=2";
-				@SuppressWarnings("unchecked")
+				session = factory.openSession();		
+				User1 usrEn = session.get(User1.class, usrId);
+				if(usrEn==null)
+					throw new TaskManagerException("User.Dao.EMAIL_ALREADY_EXIST");
+				if(usrEn.getRole().getrId()!=1)
+					throw new Exception("User.Dao.NO_AUTHORITY");
+				
+				
+				String hql = "FROM User1 WHERE roleId=2";				
 				Query<User1> q = session.createQuery(hql);							
 
 				
 				List<User1> userEn = q.list(); 
-				if(userEn==null)
+				if(userEn==null || userEn.size()==0)
 					throw new TaskManagerException("User.Dao.NO_MANAGER_FOUND");
 				
 				for(User1 usrE:userEn)
@@ -274,10 +273,10 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 		catch (HibernateException e) {
-			throw e;
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
 		}
 		catch (TaskManagerException e) {
-			throw e;
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
 		}
 		catch (Exception e) {
 			throw e;
@@ -317,7 +316,7 @@ public class UserDaoImpl implements UserDao {
 
 		}
 		catch (HibernateException e) {
-			throw e;
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
 		}
 		catch (TaskManagerException e) {
 			throw e;

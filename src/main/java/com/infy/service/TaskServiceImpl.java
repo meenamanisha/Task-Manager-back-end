@@ -27,18 +27,23 @@ public class TaskServiceImpl implements TaskService {
 		if(usrId==null)
 			throw new TaskManagerException("Task.service.NO_USER_ID_PRESENT");
 		List<Task> taskList = taskDao.getAllTaskByUserId(usrId);
-		if(taskList==null)
+		if(taskList==null || taskList.size()==0)
 			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
 		return taskList; 
 	}
 	@Override
-	public List<Integer> assignTaskToUser(User us) throws TaskManagerException, Exception {
-		if(us==null)
+	public List<Integer> assignTaskToUser(List<User> us) throws TaskManagerException, Exception {		
+		if(us==null || us.size()==0)
 			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
 		List<Integer> ans = taskDao.assignTaskToUser(us);
-		if(ans==null)
+		if(ans==null || ans.size()==0)
 			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
 		return ans;
+	}
+	@Override
+	public List<Task> getAllPendingTask(Integer usrId) throws TaskManagerException, Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

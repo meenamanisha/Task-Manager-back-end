@@ -11,11 +11,7 @@ import com.infy.validators.UserValidators;
 public class UserServiceImpl implements UserService {
 
 	private UserDao userDao= new UserDaoImpl();
-	@Override
-	public User getEmployeeById(int empId) throws TaskManagerException,Exception {	
-		return null;
-	}
-
+	
 	@Override
 	public Integer registerUser(User user) throws TaskManagerException,Exception {
 		if(user==null)
@@ -43,29 +39,29 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getAllUserDetails() throws TaskManagerException, Exception {
-		List<User> usrList = userDao.getAllUserDetails(); 
-		if(usrList==null)
+	public List<User> getAllUserDetails(Integer usrId) throws TaskManagerException, Exception {
+		List<User> usrList = userDao.getAllUserDetails(usrId); 
+		if(usrList==null || usrList.size()==0)
 			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");		
 		return usrList;
 	}
 
 	@Override
-	public List<User> getManagers() throws TaskManagerException, Exception {		
-		List<User> managersList = userDao.getManagers();
+	public List<User> getManagers(Integer usrId) throws TaskManagerException, Exception {		
+		List<User> managersList = userDao.getManagers(usrId);
 		
-		if(managersList==null)
+		if(managersList==null || managersList.size()==0)
 			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");		
 		return managersList;
 	}
 
 	@Override
 	public List<Integer> updateMangers(List<User> usrList) throws TaskManagerException, Exception {
-		if(usrList==null)
+		if(usrList==null || usrList.size()==0)
 			throw new TaskManagerException("User.Service.NO_DATA_FOUND");
 		List<Integer> idsList = userDao.updateMangers(usrList);
 
-		if(idsList==null)
+		if(idsList==null || idsList.size()==0)
 			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");		
 		return idsList;
 	}

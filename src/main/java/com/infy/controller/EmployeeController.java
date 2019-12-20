@@ -27,13 +27,13 @@ public class EmployeeController {
 	private static UserService usrServ= new UserServiceImpl();
 	
 	@GET
-	@Path("/Details")
+	@Path("/Details/{usrId}")
 	@Produces("application/json")
-	public Response getAllUserDetails()
+	public Response getAllUserDetails(@PathParam("usrId")  Integer usrId)
 	{
 		try {
 
-			List<User> userList= usrServ.getAllUserDetails();					
+			List<User> userList= usrServ.getAllUserDetails(usrId);					
 			return Response.ok().entity(userList).build();
 		}
 		catch (TaskManagerException e) {
@@ -73,13 +73,13 @@ public class EmployeeController {
 	
 	
 	@GET
-	@Path("/Managers")
+	@Path("/Managers/{usrId}")
 	@Produces("application/json")
-	public Response getManagers( )
+	public Response getManagers(@PathParam("usrId")  Integer usrId )
 	{
 		try {
 
-			List<User> userList= usrServ.getManagers();
+			List<User> userList= usrServ.getManagers(usrId);
 
 					
 			return Response.ok().entity(userList).build();
@@ -142,23 +142,7 @@ public class EmployeeController {
 
 
 
-	@GET
-	@Path("/{empId}")
-	@Produces("application/json")
-	public Response getCustomer(@PathParam("empId") int empId) {		
-		try {
-			User emp = usrServ.getEmployeeById(empId);
-
-
-			return Response.ok().entity(emp).build();
-		}
-
-		catch (Exception e) {
-			return Response.status(500).entity( e.getMessage().toString() ).build();
-		}
-
-
-	}
+	
 
 
 }

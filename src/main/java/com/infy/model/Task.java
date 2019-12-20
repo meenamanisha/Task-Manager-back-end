@@ -1,6 +1,5 @@
 package com.infy.model;
 
-import java.time.LocalDateTime; 
 
 public class Task {
 	private Integer tId;
@@ -20,8 +19,8 @@ public class Task {
 		this.tDesc = tDesc;
 	}
 	private Integer tActEff;	
-	private LocalDateTime tAllDate;
-	private LocalDateTime tCompDate;	
+	private String tAllDate;
+	private String tCompDate;	
 	private TaskStatus tStatus;
 	public Integer gettId() {
 		return tId;
@@ -61,16 +60,16 @@ public class Task {
 	}
 	
 	
-	public LocalDateTime gettAllDate() {
+	public String gettAllDate() {
 		return tAllDate;
 	}
-	public void settAllDate(LocalDateTime tAllDate) {
+	public void settAllDate(String tAllDate) {
 		this.tAllDate = tAllDate;
 	}
-	public LocalDateTime gettCompDate() {
+	public String gettCompDate() {
 		return tCompDate;
 	}
-	public void settCompDate(LocalDateTime tCompDate) {
+	public void settCompDate(String tCompDate) {
 		this.tCompDate = tCompDate;
 	}
 	public TaskStatus gettStatus() {

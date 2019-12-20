@@ -1,6 +1,7 @@
 package com.infy.dao;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.infy.entity.TaskEntity;
 import com.infy.entity.User1;
 import com.infy.exception.TaskManagerException;
 import com.infy.model.Task;
+import com.infy.model.TaskStatus;
 import com.infy.model.User;
 
 public class TaskDaoImpl implements TaskDao{
@@ -51,7 +53,7 @@ public class TaskDaoImpl implements TaskDao{
 
 		}
 		catch (HibernateException e) {
-			throw e;
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
 
 		}
 		catch (TaskManagerException e) {
@@ -83,8 +85,8 @@ public class TaskDaoImpl implements TaskDao{
 					throw new TaskManagerException("User.Dao.USER_NOT_FOUND");
 				if(usrEn.getRole().getrId()!=2)
 					throw new TaskManagerException("User.Dao.MANAGER_NOT_EXIST");
-				String sql = "FROM TaskEntity where tOwner = :usrId";
-				
+				String sql = "FROM TaskEntity where tOwner = :usrId and tStatus='NEW'";
+				 
 				
 				@SuppressWarnings("unchecked")
 				Query<TaskEntity> q = session.createQuery(sql);
@@ -92,7 +94,7 @@ public class TaskDaoImpl implements TaskDao{
 				
 				List<TaskEntity> taskEns = q.list();
 				
-				if(taskEns==null)
+				if(taskEns==null || taskEns.size()==0)
 					throw new TaskManagerException("Task.Dao.NO_TASK_BY_USER");
 				List<Task> taskList = new ArrayList<Task>();
 				
@@ -109,7 +111,7 @@ public class TaskDaoImpl implements TaskDao{
 
 		}
 		catch (HibernateException e) {
-			throw e;
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
 
 		}
 		catch (TaskManagerException e) {
@@ -126,7 +128,7 @@ public class TaskDaoImpl implements TaskDao{
 	}
 
 	@Override
-	public List<Integer> assignTaskToUser(User us) throws TaskManagerException, Exception {
+	public List<Integer> assignTaskToUser(List<User> usr) throws TaskManagerException, Exception {
 		try {
 			factory = HibernateUtility.getSessionFactory();
 
@@ -136,36 +138,48 @@ public class TaskDaoImpl implements TaskDao{
 				session = factory.openSession();
 				
 				session.getTransaction().begin();
-				User1 usrEn = (User1) session.get(User1.class, us.getUsrId());
-				if(usrEn==null)
-					throw new TaskManagerException("User.Dao.USER_NOT_FOUND");
 				
-				List<Task> tks = us.getTasks();
-				if(tks==null)
-					throw new TaskManagerException("Task.Dao.TASK_NOT_PRESENT");
-						
-				List<TaskEntity> taskEn = new ArrayList<TaskEntity>();
-				for(Task t : tks)
+				
+				for(User us : usr)
 				{
-
-					TaskEntity tE = (TaskEntity) session.get(TaskEntity.class, t.gettId());
-					if(tE==null)
-						throw new TaskManagerException("Task.Dao.TASK_ID_NOT_EXIST");
-					tE.settAllDate(t.gettAllDate());
-					tE.settStatus(tE.gettStatus());
-					tE.settAllDate(LocalDateTime.now());
-					ansList.add(tE.gettId());
-					taskEn.add(tE);
-				}			
-				usrEn.setTask(taskEn);
-				session.save(usrEn);
+					
+					User1 usrEn = (User1) session.get(User1.class, us.getUsrId());
+					if(usrEn==null)
+						throw new TaskManagerException("User.Dao.USER_NOT_FOUND");
+					
+					List<Task> tks = us.getTasks();
+					if(tks==null || tks.size()==0)
+						throw new TaskManagerException("Task.Dao.TASK_NOT_PRESENT");
+					
+					List<TaskEntity> taskEn = new ArrayList<TaskEntity>();
+					for(Task t : tks)
+					{
+						
+						TaskEntity tE = (TaskEntity) session.get(TaskEntity.class, t.gettId());
+						if(tE==null)
+							throw new TaskManagerException("Task.Dao.TASK_ID_NOT_EXIST");
+						if(!tE.gettStatus().equals(TaskStatus.NEW))
+							throw new TaskManagerException("Task.Dao.TASK_ALREADY_ASSIGNED");
+						if(null!=t.gettAllDate())
+						{
+							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");							
+							tE.settAllDate(LocalDateTime.parse(t.gettAllDate(), formatter));
+						}
+							
+						tE.settStatus(t.gettStatus()); 					
+						taskEn.add(tE);
+					}			
+					usrEn.setTask(taskEn);
+					session.save(usrEn);
+					ansList.add(us.getUsrId());
+				}
 				session.getTransaction().commit();				
 				return ansList;														
 			}
 
 		}
 		catch (HibernateException e) {
-			e.printStackTrace();
+			throw new TaskManagerException("User.Task.DATABASE_PROBLEM");
 
 		}
 		catch (TaskManagerException e) {
@@ -178,6 +192,13 @@ public class TaskDaoImpl implements TaskDao{
 			if(session!=null)
 				session.close();
 		}		
+		return null;
+	}
+
+
+	@Override
+	public List<Task> getAllPendingTask(Integer usrId) throws TaskManagerException, Exception {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

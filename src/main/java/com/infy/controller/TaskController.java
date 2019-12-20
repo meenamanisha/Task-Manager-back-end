@@ -64,23 +64,41 @@ public class TaskController {
 		
 	}
 	
+	@GET
+	@Path("/pendingTask/{usrId}")
+	@Produces("application/json")
+	public Response getAllPendingTask(@PathParam("usrId")  Integer usrId)
+	{
+		try {
+			List<Task> taskList = taskServ.getAllTaskByUserId(usrId); 					
+			return Response.ok().entity(taskList).build();
+		}
+		catch (TaskManagerException e) { 
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+	
+	
 	@PUT
 	@Path("/TaskToUser")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response assignTaskToUser(User us)
+	public Response assignTaskToUser(List<User> us)
 	{
 		try {
 			List<Integer> taskList = taskServ.assignTaskToUser(us);			
 			return Response.ok().entity(taskList).build();
 		}
-		catch (TaskManagerException e) { 
-			System.out.println(e.getMessage());
+		catch (TaskManagerException e) {  
 			String s = p.getProperty(e.getMessage().toString());
 			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
 
 			return Response.status(500).entity( e.getMessage().toString() ).build();
 		}	

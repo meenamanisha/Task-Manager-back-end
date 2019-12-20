@@ -135,8 +135,11 @@ public class TaskEntity {
 	{
 		Task t = new Task();
 		t.settActEff(this.tActEff);
-		t.settAllDate(this.tAllDate);
-		t.settCompDate(this.tCompDate);
+		if(null != this.tAllDate) {
+			t.settAllDate(this.tAllDate.toString());
+		}		
+		if(null!=this.tCompDate)
+			t.settCompDate(this.tCompDate.toString());
 		t.settExpEff(this.tExpEff);
 		t.settId(this.tId);
 		t.settName(this.tName);
