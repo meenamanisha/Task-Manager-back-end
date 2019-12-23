@@ -13,7 +13,7 @@ public class TaskValidators {
 		
 	}
 	
-	public static boolean expectedEffortValidate(int ExpEff)
+	public static boolean expectedEffortValidate(Double ExpEff)
 	{
 		if(ExpEff>0)
 			return true;

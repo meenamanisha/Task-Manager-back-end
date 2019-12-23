@@ -41,9 +41,41 @@ public class TaskServiceImpl implements TaskService {
 		return ans;
 	}
 	@Override
-	public List<Task> getAllPendingTask(Integer usrId) throws TaskManagerException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> getAllPendingTask(Integer usrId) throws TaskManagerException, Exception {
+		if(usrId==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		List<User> ans = taskDao.getAllPendingTask(usrId);
+		if(ans==null || ans.size()==0)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;
 	}
+	@Override
+	public List<Integer> verifyPendingTask(Integer usrId, List<User> us) throws TaskManagerException, Exception {
+		if(us==null || us.size()==0 || usrId ==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		List<Integer> ans = taskDao.verifyPendingTask(usrId, us);
+		if(ans==null || ans.size()==0)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;
+	}
+	@Override
+	public List<Integer> userProcessedTask(Integer usrId, List<Task> tasks) throws TaskManagerException, Exception {
+		if( usrId ==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		if(tasks==null || tasks.size()==0)
+			throw new TaskManagerException("Task.Service.TASK_NOT_AVAILABLE");
+		List<Integer> ans = taskDao.userProcessedTask(usrId, tasks);		
+		if(ans==null || ans.size()==0)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;
+	}
+	@Override
+	public List<Task> getAssignedTaskOfUser(Integer usrId) throws TaskManagerException, Exception {
+		if(usrId ==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		List<Task> ans = taskDao.getAssignedTaskOfUser(usrId);
+		if(ans==null || ans.size()==0)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;	}
 
 }

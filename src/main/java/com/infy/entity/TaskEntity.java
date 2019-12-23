@@ -38,9 +38,9 @@ public class TaskEntity {
 	
 	private String tName;
 	
-	private Integer tExpEff;
+	private Double tExpEff;
 	
-	private Integer tActEff;
+	private Double tActEff;
 		
 //	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(columnDefinition="timestamp")
@@ -81,21 +81,23 @@ public class TaskEntity {
 	public void settName(String tName) {
 		this.tName = tName;
 	}
+	
 
+	public Double gettExpEff() {
+		return tExpEff;
+	}
 
-	public void settExpEff(Integer tExpEff) {
+	public void settExpEff(Double tExpEff) {
 		this.tExpEff = tExpEff;
 	}
 
-	public void settActEff(Integer tActEff) {
-		this.tActEff = tActEff;
+	public Double gettActEff() {
+		return tActEff;
 	}
 
-	
-
-	
-
-	
+	public void settActEff(Double tActEff) {
+		this.tActEff = tActEff;
+	}
 
 	public LocalDateTime gettAllDate() {
 		return tAllDate;
@@ -113,13 +115,7 @@ public class TaskEntity {
 		this.tCompDate = tCompDate;
 	}
 
-	public Integer gettExpEff() {
-		return tExpEff;
-	}
-
-	public Integer gettActEff() {
-		return tActEff;
-	}
+	
 
 	
 	

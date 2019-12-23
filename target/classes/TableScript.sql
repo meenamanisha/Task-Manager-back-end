@@ -1,6 +1,6 @@
+drop table task;
 drop table user1;
 drop table role;
-drop table task;
 drop table user1_task;
 
 
@@ -37,8 +37,8 @@ create table task
 	tName VARCHAR(255) NOT NULL,
 	tOwner INT NOT NULL,
 	tStatus VARCHAR(20) NOT NULL,
-	tExpEff INT NOT NULL,
-	tActEff INT,
+	tExpEff DOUBLE NOT NULL,
+	tActEff DOUBLE,
 	tAllDate DATETIME,
 	tCompDate DATETIME,
 	tDesc TINYTEXT,
@@ -78,3 +78,5 @@ insert into user1 values (1045158,'Ankit Bhardwaj','Sunshine.0987@gmail.com','10
 insert into user1 values (1045159,'Deepak Yadav','Y1234.Deepak@gmail.com','1029384756','12wertyu',null,3,'Nepal','Jammu & Kashmir',null);
 insert into user1 values (1045144,'Manisha Meena','meenamanisha337@gmail.com','3456789023','12345678',null,1,'Bangalore','Rajasthan',null);
 
+
+insert into task values(12091,"Example",1045144,"COMPLETED",1,1,null,null,"Just For setting the task form a proper task Task Id");

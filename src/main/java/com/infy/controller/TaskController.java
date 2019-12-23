@@ -70,7 +70,7 @@ public class TaskController {
 	public Response getAllPendingTask(@PathParam("usrId")  Integer usrId)
 	{
 		try {
-			List<Task> taskList = taskServ.getAllTaskByUserId(usrId); 					
+			List<User> taskList = taskServ.getAllPendingTask(usrId); 					
 			return Response.ok().entity(taskList).build();
 		}
 		catch (TaskManagerException e) { 
@@ -82,6 +82,29 @@ public class TaskController {
 		}	
 		
 	}
+	
+	
+	@PUT
+	@Path("/verifyTask/{usrId}")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Response verifyPendingTask(@PathParam("usrId")  Integer usrId, List<User> usr)
+	{
+		try {
+			
+			List<Integer> taskList = taskServ.verifyPendingTask(usrId, usr);
+			return Response.ok().entity(taskList).build();
+		}
+		catch (TaskManagerException e) { 
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+	
 	
 	
 	@PUT
@@ -104,6 +127,49 @@ public class TaskController {
 		}	
 		
 	}
+	
+
+	@GET
+	@Path("/getAssignedTask/{usrId}")	
+	@Produces("application/json")
+	public Response getAssignedTaskOfUser(@PathParam("usrId") Integer usrId)
+	{
+		try {
+			List<Task> taskList = taskServ.getAssignedTaskOfUser(usrId);		
+			return Response.ok().entity(taskList).build();
+		}
+		catch (TaskManagerException e) {  
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}		
+	}	
+	
+	@PUT
+	@Path("/completeTask/{usrId}")	
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response userProcessedTask(@PathParam("usrId") Integer usrId, List<Task> tasks)
+	{
+		try {
+			List<Integer> resultList = taskServ.userProcessedTask(usrId,tasks);			
+			return Response.ok().entity(resultList).build();
+		}
+		catch (TaskManagerException e) {  
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+
+	
+	
 	
 
 

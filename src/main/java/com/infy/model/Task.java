@@ -8,20 +8,28 @@ public class Task {
 
 	private Integer tOwner;
 
-	private Integer tExpEff;
+	private Double tExpEff;
 	private String tDesc;
 	
+	private Double tActEff;	
+	private String tAllDate;
+	private String tCompDate;	
+	private TaskStatus tStatus;
+	private String taskOwner;
+	
 
+	public String getTaskOwner() {
+		return taskOwner;
+	}
+	public void setTaskOwner(String taskOwner) {
+		this.taskOwner = taskOwner;
+	}
 	public String gettDesc() {
 		return tDesc;
 	}
 	public void settDesc(String tDesc) {
 		this.tDesc = tDesc;
 	}
-	private Integer tActEff;	
-	private String tAllDate;
-	private String tCompDate;	
-	private TaskStatus tStatus;
 	public Integer gettId() {
 		return tId;
 	}
@@ -36,22 +44,18 @@ public class Task {
 	}
 
 	
-	public Integer gettExpEff() {
+	public Double gettExpEff() {
 		return tExpEff;
 	}
-	public void settExpEff(Integer tExpEff) {
+	public void settExpEff(Double tExpEff) {
 		this.tExpEff = tExpEff;
 	}
-	public Integer gettActEff() {
+	public Double gettActEff() {
 		return tActEff;
 	}
-	public void settActEff(Integer tActEff) {
+	public void settActEff(Double tActEff) {
 		this.tActEff = tActEff;
 	}
-	
-	
-	
-	
 	public Integer gettOwner() {
 		return tOwner;
 	}
