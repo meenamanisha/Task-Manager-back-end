@@ -45,9 +45,13 @@ public class UserDaoImpl implements UserDao {
 
 				if(usrE!=null)
 					throw new TaskManagerException("User.Dao.EMAIL_ALREADY_EXIST");
-				User1 urE = session.get(User1.class, user.getUsrMId());
-				if(urE!=null && urE.getRole().getrId()!=2)
-					throw new TaskManagerException("User.Dao.MANAGER_NOT_EXIST");
+				if(user.getUsrMId()!=null)
+				{
+					
+					User1 urE = session.get(User1.class, user.getUsrMId());
+					if(urE!=null && urE.getRole().getrId()!=2)
+						throw new TaskManagerException("User.Dao.MANAGER_NOT_EXIST");
+				}
 
 				User1 usr = new User1();
 				usr.setUsrName(user.getUsrName());
