@@ -14,6 +14,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.jboss.logging.Logger;
+
 import com.infy.config.PropertiesReader;
 import com.infy.exception.TaskManagerException;
 import com.infy.model.User;
@@ -25,6 +27,7 @@ import com.infy.service.UserServiceImpl;
 public class EmployeeController {
 	public static Properties p = PropertiesReader.properties;
 	private static UserService usrServ= new UserServiceImpl();
+	static Logger logger = Logger.getLogger(EmployeeController.class);
 	
 	@GET
 	@Path("/Details/{usrId}")
@@ -32,13 +35,14 @@ public class EmployeeController {
 	public Response getAllUserDetails(@PathParam("usrId")  Integer usrId)
 	{
 		try {
-
+			logger.debug("Comes to Controller class");
 			List<User> userList= usrServ.getAllUserDetails(usrId);					
 			return Response.ok().entity(userList).build();
 		}
 		catch (TaskManagerException e) {
 			System.out.println(e.getMessage());
 			String s = p.getProperty(e.getMessage().toString());
+			logger.debug("Some Exception occured : "+s);
 			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {
@@ -62,6 +66,7 @@ public class EmployeeController {
 		}
 		catch (TaskManagerException e) { 
 			String s = p.getProperty(e.getMessage().toString());
+			logger.debug("Some Exception occured : "+s);
 			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {
@@ -87,6 +92,7 @@ public class EmployeeController {
 		catch (TaskManagerException e) {
 			System.out.println(e.getMessage());
 			String s = p.getProperty(e.getMessage().toString());
+			logger.debug("Some Exception occured : "+s);
 			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {
@@ -113,6 +119,7 @@ public class EmployeeController {
 		catch (TaskManagerException e) {
 			System.out.println(e.getMessage());
 			String s = p.getProperty(e.getMessage().toString());
+			logger.debug("Some Exception occured : "+s);
 			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {
@@ -132,6 +139,7 @@ public class EmployeeController {
 		}
 		catch (TaskManagerException e) {
 			String s = p.getProperty(e.getMessage().toString());
+			logger.debug("Some Exception occured : "+s);
 			return Response.status(500).entity(s).build();			
 		}
 		catch (Exception e) {

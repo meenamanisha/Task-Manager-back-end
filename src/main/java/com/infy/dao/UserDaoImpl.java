@@ -3,15 +3,15 @@ package com.infy.dao;
 
 import java.util.ArrayList;
 import java.util.List;
- 
 
+import org.jboss.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import com.infy.entity.User1;
-import com.infy.exception.TaskManagerException;
+import com.infy.exception.TaskManagerException; 
 import com.infy.entity.HibernateUtility;
 import com.infy.entity.RoleEntity;
 import com.infy.entity.TaskEntity;
@@ -21,6 +21,8 @@ import com.infy.model.User;
 
 @SuppressWarnings("unchecked")
 public class UserDaoImpl implements UserDao {
+	
+	static Logger logger = Logger.getLogger(UserDaoImpl.class);
 
 	SessionFactory factory;
 	Session session;

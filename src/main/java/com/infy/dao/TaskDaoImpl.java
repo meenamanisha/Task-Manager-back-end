@@ -7,6 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
@@ -23,6 +24,8 @@ import com.infy.model.User;
 
 @SuppressWarnings("unchecked")
 public class TaskDaoImpl implements TaskDao{
+	
+	static Logger logger = Logger.getLogger(TaskDaoImpl.class);
 	SessionFactory factory;
 	Session session;
 	private static DecimalFormat df2 = new DecimalFormat("#.##");

@@ -45,6 +45,11 @@
 			<version>2.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -63,10 +68,10 @@
 			<version>3.0.13.Final</version>
 		</dependency>
 		<dependency>
-    <groupId>com.fasterxml.jackson.jaxrs</groupId>
-    <artifactId>jackson-jaxrs-json-provider</artifactId>
-    <version>2.4.2</version>
-</dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>2.4.2</version>
+		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>

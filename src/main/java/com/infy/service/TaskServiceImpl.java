@@ -2,6 +2,8 @@ package com.infy.service;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import com.infy.dao.TaskDao;
 import com.infy.dao.TaskDaoImpl;
 import com.infy.exception.TaskManagerException;
@@ -10,6 +12,7 @@ import com.infy.model.User;
 import com.infy.validators.TaskValidators;
 
 public class TaskServiceImpl implements TaskService {
+	static  Logger log = Logger.getLogger(TaskServiceImpl.class);
 
 	TaskDao taskDao = new TaskDaoImpl();
 	@Override

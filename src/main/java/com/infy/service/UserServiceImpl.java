@@ -2,6 +2,8 @@ package com.infy.service;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import com.infy.dao.UserDao;
 import com.infy.dao.UserDaoImpl;
 import com.infy.exception.TaskManagerException;
@@ -9,6 +11,7 @@ import com.infy.model.User;
 import com.infy.validators.UserValidators;
 
 public class UserServiceImpl implements UserService {
+	static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	private UserDao userDao= new UserDaoImpl();
 	
@@ -17,7 +20,7 @@ public class UserServiceImpl implements UserService {
 		if(user==null)
 			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
 		UserValidators.userValidate(user);
-		
+		logger.debug("check");
 		Integer id = userDao.registerUser(user);
 		if(id==null)
 			throw new TaskManagerException("User.Service.DATABASE_CONNECTION");
