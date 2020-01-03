@@ -18,9 +18,16 @@ public class Task {
 	private String taskOwner;
 	private Integer tUserId;
 	private String tUserName;
+	private String tCreatDate;
 	
 	
 
+	public String gettCreatDate() {
+		return tCreatDate;
+	}
+	public void settCreatDate(String tCreatDate) {
+		this.tCreatDate = tCreatDate;
+	}
 	public String getTaskOwner() {
 		return taskOwner;
 	}

@@ -25,10 +25,10 @@
 		<!-- Mapping files -->
 		
 		<property name="hbm2ddl.auto">validate</property>
-		<mapping class="com.infy.entity.User1" />
-		<mapping class="com.infy.entity.TaskEntity" />
+		<mapping class="com.taskmanager.entity.User1" />
+		<mapping class="com.taskmanager.entity.TaskEntity" />
 
-		<mapping class="com.infy.entity.RoleEntity" />
+		<mapping class="com.taskmanager.entity.RoleEntity" />
 	
 	</session-factory>
 

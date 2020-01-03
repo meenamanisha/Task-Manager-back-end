@@ -17,6 +17,7 @@ import com.taskmanager.entity.User1;
 import com.taskmanager.exception.TaskManagerException;
 import com.taskmanager.model.Role;
 import com.taskmanager.model.Task;
+import com.taskmanager.model.TaskStatus;
 import com.taskmanager.model.User;
 
 @SuppressWarnings("unchecked")
@@ -111,8 +112,16 @@ public class UserDaoImpl implements UserDao {
 				if(!usrE.getPassword().equals(user.getPassword()))
 					throw new TaskManagerException("User.Dao.PASSWORD_EMAIL_MIS_MATCH");
 				usrE.setPassword(null);
-				
 				User us= usrE.userEntityToModel();
+				if(usrE.getRole().getrId()==2)
+				{
+					String countQuery ="select count(*) from TaskEntity where tOwner= :id and tStatus ='PENDING_TO_VERFIFY'";
+					Query<Integer> q1 = session.createQuery(countQuery);
+					q1.setParameter("id", us.getUsrId());
+					Object o = q1.uniqueResult();
+					Integer  ans = Integer.valueOf(o.toString());
+					us.setPendingTask(ans);					
+				}
 				if(usrE.getUsrMId()!=null)
 				{
 					User1 uE =session.get(User1.class, usrE.getUsrMId()); 
@@ -125,13 +134,18 @@ public class UserDaoImpl implements UserDao {
 				List<TaskEntity> taskE = usrE.getTask();
 				if(!taskE.isEmpty())
 				{
-					List<Task> tasks = new ArrayList<Task>();					
+					int ans =0;
+//					List<Task> tasks = new ArrayList<Task>();					
 					for(TaskEntity tE : taskE)
 					{
-						Task t = tE.taskEnityToModel();
-						tasks.add(t);						
+//						Task t = tE.taskEnityToModel();
+						if(tE.gettStatus().equals(TaskStatus.IN_PROCESS))
+							ans++;
+//						tasks.add(t);						
 					}
-					us.setTasks(tasks);
+					if(us.getRole().getrId()==3)
+						us.setPendingTask(ans);
+//					us.setTasks(tasks);
 				}
 				return us;
 			}

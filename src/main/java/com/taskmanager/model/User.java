@@ -19,8 +19,18 @@ public class User {
 
 	private String usrMName;
 	private String usrMEmail;
+	private Integer pendingTask;
+	
 	
 		
+	public Integer getPendingTask() {
+		return pendingTask;
+	}
+
+	public void setPendingTask(Integer pendingTask) {
+		this.pendingTask = pendingTask;
+	}
+
 	public String getUsrMName() {
 		return usrMName;
 	}

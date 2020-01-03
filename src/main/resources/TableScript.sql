@@ -41,6 +41,7 @@ create table task
 	tActEff DOUBLE,
 	tAllDate DATETIME,
 	tCompDate DATETIME,
+	tCreatDate DATETIME,
 	tDesc TINYTEXT,
 	PRIMARY KEY(tId),
 	FOREIGN KEY(tOwner) REFERENCES user1(usrId),
@@ -54,6 +55,10 @@ create table user1_task
 	task_tId INT NOT NULL,
 	PRIMARY KEY (user1_usrId,task_tId)
 );
+
+CREATE INDEX FK_hyr2u4kyeo76n15offj0ydgk3 ON user1_task (user1_usrId ASC);
+CREATE UNIQUE INDEX UK_ber2xs3ykkb26vsn5i37kbwqm ON user1_task (task_tId ASC);
+CREATE INDEX FK_ber2xs3ykkb26vsn5i37kbwqm ON user1_task (task_tId ASC);
 
 
 insert into role values (1,'ADMIN');
@@ -79,4 +84,4 @@ insert into user1 values (1045159,'Deepak Yadav','Y1234.Deepak@gmail.com','10293
 insert into user1 values (1045144,'Manisha Meena','meenamanisha337@gmail.com','3456789023','12345678',null,1,'Bangalore','Rajasthan',null);
 
 
-insert into task values(12091,"Example",1045144,"COMPLETED",1,1,null,null,"Just For setting the task form a proper task Task Id");
+insert into task values(12091,"Example",1045144,"COMPLETED",1,1,null,null,"2019-12-27 10:45:50","Just For setting the task form a proper task Task Id");

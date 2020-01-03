@@ -46,12 +46,72 @@ public class TaskController {
 		}	
 	}
 	@GET
-	@Path("/allTasks/{usrId}")
+	@Path("/allTasks/{usrId}/{taskDet}")
 	@Produces("application/json")
-	public Response getAllTaskByUserId(@PathParam("usrId")  Integer usrId)
+	public Response getAllTaskByUserId(@PathParam("usrId")  Integer usrId, @PathParam("taskDet") String taskDet)
 	{
 		try {
-			List<Task> taskList = taskServ.getAllTaskByUserId(usrId); 					
+			List<Task> taskList = taskServ.getAllTaskByUserId(usrId,taskDet); 					
+			return Response.ok().entity(taskList).build();
+		}
+		catch (TaskManagerException e) { 
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+	@GET
+	@Path("/userTask/{usrId}")
+	@Produces("application/json")
+	public Response getAllUserCreatedTask(@PathParam("usrId")  Integer usrId)
+	{
+		try {
+			List<Task> taskList = taskServ.getAllUserCreatedTask(usrId); 					
+			return Response.ok().entity(taskList).build();
+		}
+		catch (TaskManagerException e) { 
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+	
+
+	@GET
+	@Path("/pendingTask/{usrId}")
+	@Produces("application/json")
+	public Response getAllPendingTask(@PathParam("usrId")  Integer usrId)
+	{
+		try {
+			List<Task> taskList = taskServ.getAllPendingTask(usrId); 					
+			return Response.ok().entity(taskList).build();
+		}
+		catch (TaskManagerException e) { 
+			String s = p.getProperty(e.getMessage().toString());
+			return Response.status(500).entity(s).build();			
+		}
+		catch (Exception e) {
+			return Response.status(500).entity( e.getMessage().toString() ).build();
+		}	
+		
+	}
+	
+	
+	
+	
+	@GET
+	@Path("/createdTask/{usrId}")
+	@Produces("application/json")
+	public Response getAllCreatedTask(@PathParam("usrId")  Integer usrId)
+	{
+		try {
+			List<Task> taskList = taskServ.getAllCreatedTask(usrId); 					
 			return Response.ok().entity(taskList).build();
 		}
 		catch (TaskManagerException e) { 
@@ -65,12 +125,12 @@ public class TaskController {
 	}
 	
 	@GET
-	@Path("/pendingTask/{usrId}")
+	@Path("/weekDashBoard/{usrId}")
 	@Produces("application/json")
-	public Response getAllPendingTask(@PathParam("usrId")  Integer usrId)
+	public Response getWeekDashBoard(@PathParam("usrId")  Integer usrId)
 	{
 		try {
-			List<User> taskList = taskServ.getAllPendingTask(usrId); 					
+			List<Task> taskList = taskServ.getWeekDashBoard(usrId); 					
 			return Response.ok().entity(taskList).build();
 		}
 		catch (TaskManagerException e) { 
@@ -82,7 +142,6 @@ public class TaskController {
 		}	
 		
 	}
-	
 	
 	@PUT
 	@Path("/verifyTask/{usrId}")
@@ -128,24 +187,24 @@ public class TaskController {
 		
 	}
 	
-
-	@GET
-	@Path("/getAssignedTask/{usrId}")	
-	@Produces("application/json")
-	public Response getAssignedTaskOfUser(@PathParam("usrId") Integer usrId)
-	{
-		try {
-			List<Task> taskList = taskServ.getAssignedTaskOfUser(usrId);		
-			return Response.ok().entity(taskList).build();
-		}
-		catch (TaskManagerException e) {  
-			String s = p.getProperty(e.getMessage().toString());
-			return Response.status(500).entity(s).build();			
-		}
-		catch (Exception e) {
-			return Response.status(500).entity( e.getMessage().toString() ).build();
-		}		
-	}	
+//
+//	@GET
+//	@Path("/getAssignedTask/{usrId}")	
+//	@Produces("application/json")
+//	public Response getAssignedTaskOfUser(@PathParam("usrId") Integer usrId)
+//	{
+//		try {
+//			List<Task> taskList = taskServ.getAssignedTaskOfUser(usrId);		
+//			return Response.ok().entity(taskList).build();
+//		}
+//		catch (TaskManagerException e) {  
+//			String s = p.getProperty(e.getMessage().toString());
+//			return Response.status(500).entity(s).build();			
+//		}
+//		catch (Exception e) {
+//			return Response.status(500).entity( e.getMessage().toString() ).build();
+//		}		
+//	}	
 	
 	@PUT
 	@Path("/completeTask/{usrId}")	

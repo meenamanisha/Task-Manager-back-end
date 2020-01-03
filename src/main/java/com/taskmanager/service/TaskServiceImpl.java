@@ -26,10 +26,10 @@ public class TaskServiceImpl implements TaskService {
 		return id;
 	}
 	@Override
-	public List<Task> getAllTaskByUserId(Integer usrId) throws TaskManagerException, Exception {
+	public List<Task> getAllTaskByUserId(Integer usrId, String taskDet) throws TaskManagerException, Exception {
 		if(usrId==null)
 			throw new TaskManagerException("Task.service.NO_USER_ID_PRESENT");
-		List<Task> taskList = taskDao.getAllTaskByUserId(usrId);
+		List<Task> taskList = taskDao.getAllTaskByUserId(usrId,taskDet);
 		if(taskList==null || taskList.size()==0)
 			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
 		return taskList; 
@@ -44,10 +44,10 @@ public class TaskServiceImpl implements TaskService {
 		return ans;
 	}
 	@Override
-	public List<User> getAllPendingTask(Integer usrId) throws TaskManagerException, Exception {
+	public List<User> allAssignedTask(Integer usrId) throws TaskManagerException, Exception {
 		if(usrId==null)
 			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
-		List<User> ans = taskDao.getAllPendingTask(usrId);
+		List<User> ans = taskDao.allAssignedTask(usrId);
 		if(ans==null || ans.size()==0)
 			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
 		return ans;
@@ -80,5 +80,41 @@ public class TaskServiceImpl implements TaskService {
 		if(ans==null || ans.size()==0)
 			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
 		return ans;	}
+	@Override
+	public List<Task> getAllUserCreatedTask(Integer usrId) throws TaskManagerException, Exception {
+		if(usrId==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		List<Task> ans = taskDao.getAllUserCreatedTask(usrId);
+		if(ans==null || ans.size()==0)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;
+	}
+	@Override
+	public List<Task> getAllPendingTask(Integer usrId) throws TaskManagerException, Exception {
+		if(usrId==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		List<Task> ans = taskDao.getAllPendingTask(usrId);
+		if(ans==null || ans.size()==0)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;
+	}
+	@Override
+	public List<Task> getAllCreatedTask(Integer usrId) throws TaskManagerException, Exception {
+		if(usrId==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		List<Task> ans = taskDao.getAllCreatedTask(usrId);
+		if(ans==null || ans.size()==0)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;
+	}
+	@Override
+	public List<Task> getWeekDashBoard(Integer usrId) throws TaskManagerException, Exception {
+		if(usrId==null)
+			throw new TaskManagerException("User.Service.USER_NOT_AVAILABLE");
+		List<Task> ans = taskDao.getWeekDashBoard(usrId);
+		if(ans==null || ans.size()==0)
+			throw new TaskManagerException("Task.Service.DATABASE_CONNECTION");
+		return ans;
+	}
 
 }

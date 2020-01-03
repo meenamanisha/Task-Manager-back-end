@@ -26,13 +26,6 @@ public class TaskEntity {
 	private Integer tId;
 	private String tDesc;
 	
-	public String gettDesc() {
-		return tDesc;
-	}
-
-	public void settDesc(String tDesc) {
-		this.tDesc = tDesc;
-	}
 
 	private Integer tOwner;
 	
@@ -41,15 +34,10 @@ public class TaskEntity {
 	
 	private Double tExpEff;
 	
-	private Double tActEff;
-		
-//	@Temporal(TemporalType.TIMESTAMP)
-//	@Column(columnDefinition="timestamp")
+	private Double tActEff;		
 	private LocalDateTime tAllDate;
-
-//	@Temporal(TemporalType.TIMESTAMP)
-//	@Column(columnDefinition="timestamp")
 	private LocalDateTime tCompDate;
+	private LocalDateTime tCreatDate;
 	
 	
 	@Enumerated(EnumType.STRING)
@@ -59,6 +47,21 @@ public class TaskEntity {
 		return tId;
 	}
 
+	public LocalDateTime gettCreatDate() {
+		return tCreatDate;
+	}
+
+	public void settCreatDate(LocalDateTime tCreatDate) {
+		this.tCreatDate = tCreatDate;
+	}
+
+	public String gettDesc() {
+		return tDesc;
+	}
+	
+	public void settDesc(String tDesc) {
+		this.tDesc = tDesc;
+	}
 	public void settId(Integer tId) {
 		this.tId = tId;
 	}
@@ -134,13 +137,11 @@ public class TaskEntity {
 		t.settActEff(this.tActEff);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");	 
 		if(null != this.tAllDate) {
-			System.out.println(this.tAllDate);
-			System.out.println(this.tAllDate.format(formatter));
-			
 			t.settAllDate(this.tAllDate.format(formatter));
 		}		
 		if(null!=this.tCompDate)
 			t.settCompDate(this.tCompDate.format(formatter));
+		t.settCreatDate(this.tCreatDate.format(formatter));
 		t.settExpEff(this.tExpEff);
 		t.settId(this.tId);
 		t.settName(this.tName);
