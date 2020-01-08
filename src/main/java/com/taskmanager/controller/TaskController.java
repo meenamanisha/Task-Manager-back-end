@@ -45,6 +45,9 @@ public class TaskController {
 			return Response.status(500).entity( e.getMessage().toString() ).build();
 		}	
 	}
+	
+	
+	
 	@GET
 	@Path("/allTasks/{usrId}/{taskDet}")
 	@Produces("application/json")
